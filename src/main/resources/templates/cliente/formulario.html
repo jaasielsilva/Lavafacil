@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Cliente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function adicionarVeiculo() {
+            const container = document.getElementById("veiculos-container");
+            const index = container.children.length;
+            const template = `
+            <div class="border rounded p-3 mb-3">
+                <h4>Veículo ${index + 1}</h4>
+                <input type="hidden" name="veiculos[${index}].id" />
+
+                <label>Marca:</label>
+                <input type="text" name="veiculos[${index}].marca" class="form-control" />
+
+                <label>Modelo:</label>
+                <input type="text" name="veiculos[${index}].modelo" class="form-control" />
+
+                <label>Placa:</label>
+                <input type="text" name="veiculos[${index}].placa" class="form-control" />
+
+                <label>Cor:</label>
+                <input type="text" name="veiculos[${index}].cor" class="form-control" />
+
+                <label>Ano:</label>
+                <input type="number" name="veiculos[${index}].ano" class="form-control" />
+            </div>
+            `;
+            container.insertAdjacentHTML("beforeend", template);
+        }
+    </script>
+</head>
+<body class="container mt-5">
+<h2 class="mb-4">Cadastro de Cliente</h2>
+
+<form th:action="@{/clientes/salvar}" th:object="${cliente}" method="post" class="row g-3">
+    <input type="hidden" th:field="*{id}">
+
+    <div class="col-md-6">
+        <label class="form-label">Nome:</label>
+        <input type="text" th:field="*{nome}" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">E-mail:</label>
+        <input type="email" th:field="*{email}" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">Telefone:</label>
+        <input type="text" th:field="*{telefone}" class="form-control" required>
+    </div>
+
+    <!-- Veículos vinculados -->
+    <div id="veiculos-container">
+        <div th:each="veiculo, iter : *{veiculos}" class="border rounded p-3 mb-3">
+            <h4>Veículo <span th:text="${iter.index + 1}"></span></h4>
+            <input type="hidden" th:field="*{veiculos[__${iter.index}__].id}" />
+
+            <label>Marca:</label>
+            <input type="text" th:field="*{veiculos[__${iter.index}__].marca}" class="form-control" />
+
+            <label>Modelo:</label>
+            <input type="text" th:field="*{veiculos[__${iter.index}__].modelo}" class="form-control" />
+
+            <label>Placa:</label>
+            <input type="text" th:field="*{veiculos[__${iter.index}__].placa}" class="form-control" />
+
+            <label>Cor:</label>
+            <input type="text" th:field="*{veiculos[__${iter.index}__].cor}" class="form-control" />
+
+            <label>Ano:</label>
+            <input type="number" th:field="*{veiculos[__${iter.index}__].ano}" class="form-control" />
+        </div>
+    </div>
+
+    <div class="col-12">
+        <button type="button" class="btn btn-outline-primary mb-3" onclick="adicionarVeiculo()">+ Adicionar Veículo</button>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a th:href="@{/clientes/lista}" class="btn btn-secondary">Ver Lista</a>
+    </div>
+
+    <div th:if="${param.sucesso}" class="alert alert-success mt-3">
+        ✅ Cliente salvo com sucesso!
+    </div>
+</form>
+</body>
+</html>

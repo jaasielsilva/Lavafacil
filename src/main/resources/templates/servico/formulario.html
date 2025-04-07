@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Serviço</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">🛠️ Cadastro de Serviço</h2>
+
+    <form th:action="@{/servicos/salvar}" th:object="${servico}" method="post" class="border p-4 rounded shadow-sm">
+        
+        <!-- Lista de Serviços já cadastrados -->
+        <div class="mb-4">
+            <label for="servicoSelect" class="form-label">Serviços Cadastrados</label>
+            <select id="servicoSelect" class="form-select">
+                <option value="">-- Selecione um serviço existente --</option>
+                <option th:each="s : ${servicos}"
+                        th:value="${s.id}"
+                        th:data-nome="${s.nome}"
+                        th:data-descricao="${s.descricao}"
+                        th:data-preco="${s.preco}"
+                        th:text="${s.nome}">
+                </option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome do Serviço</label>
+            <input type="text" id="nome" th:field="*{nome}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <textarea id="descricao" th:field="*{descricao}" class="form-control" rows="3" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="preco" class="form-label">Preço (R$)</label>
+            <input type="number" id="preco" th:field="*{preco}" class="form-control" step="0.01" required>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a th:href="@{/}" class="btn btn-secondary">Voltar</a>
+            <button type="submit" class="btn btn-success">Salvar Serviço</button>
+        </div>
+    </form>
+</div>
+
+<!-- Script para preencher os campos -->
+<script>
+    const select = document.getElementById("servicoSelect");
+    const nomeInput = document.getElementById("nome");
+    const descricaoInput = document.getElementById("descricao");
+    const precoInput = document.getElementById("preco");
+
+    select.addEventListener("change", function () {
+        const selectedOption = select.options[select.selectedIndex];
+
+        const nome = selectedOption.getAttribute("data-nome");
+        const descricao = selectedOption.getAttribute("data-descricao");
+        const preco = selectedOption.getAttribute("data-preco");
+
+        if (nome && descricao && preco) {
+            nomeInput.value = nome;
+            descricaoInput.value = descricao;
+            precoInput.value = preco;
+        } else {
+            nomeInput.value = "";
+            descricaoInput.value = "";
+            precoInput.value = "";
+        }
+    });
+</script>
+
+</body>
+</html>

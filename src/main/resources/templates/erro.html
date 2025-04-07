@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Erro - LavaFácil</title>
+</head>
+<body>
+<div th:replace="~{layouts/base :: layout(~{::#conteudo})}">
+    <div id="conteudo">
+        <h2>Ocorreu um erro!</h2>
+        <p>Desculpe, não foi possível processar sua solicitação.</p>
+        <a th:href="@{/}" class="btn btn-primary">Voltar à Home</a>
+    </div>
+</div>
+</body>
+</html>

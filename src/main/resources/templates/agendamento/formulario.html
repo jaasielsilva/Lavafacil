@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendamento - LavaFácil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+
+    <h2 class="mb-4">Agendamento de Serviço</h2>
+
+    <form th:action="@{/agendamento/salvar}" th:object="${agendamento}" method="post" class="row g-3">
+        
+        <div class="col-md-6">
+            <label for="cliente" class="form-label">Cliente:</label>
+            <select th:field="*{cliente}" id="cliente" class="form-select" required>
+                <option value="">-- Selecione o cliente --</option>
+                <option th:each="cliente : ${clientes}"
+                        th:value="${cliente.id}"
+                        th:text="${cliente.nome}">
+                </option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="veiculo" class="form-label">Veículo:</label>
+            <select th:field="*{veiculo}" id="veiculo" class="form-select" required>
+                <option value="">-- Selecione o veículo --</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="servico" class="form-label">Serviço:</label>
+            <select th:field="*{servico}" id="servico" class="form-select" required>
+                <option value="">-- Selecione um serviço --</option>
+                <option th:each="servico : ${servicos}"
+                        th:value="${servico.id}"
+                        th:text="${servico.nome}">
+                </option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="precoServico" class="form-label">Preço do Serviço:</label>
+            <input type="text" id="precoServico" class="form-control" disabled>
+        </div>
+
+        <div class="col-md-6">
+            <label for="data" class="form-label">Data:</label>
+            <input type="date" th:field="*{data}" id="data" class="form-control" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="hora" class="form-label">Hora:</label>
+            <input type="time" th:field="*{hora}" id="hora" class="form-control" required>
+        </div>
+
+        <div class="col-12 d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-calendar-check"></i> Agendar
+            </button>
+            <a href="/" class="btn btn-secondary">
+                🏠 Voltar para Home
+            </a>
+        </div>
+
+        <div th:if="${param.sucesso}" class="alert alert-success mt-3">
+            ✅ Agendamento realizado com sucesso!
+        </div>
+    </form>
+
+    <!-- Script: Carregar veículos do cliente -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const clienteSelect = document.getElementById('cliente');
+            const veiculoSelect = document.getElementById('veiculo');
+
+            clienteSelect.addEventListener('change', function () {
+                const clienteId = this.value;
+                veiculoSelect.innerHTML = '<option value="">-- Selecione o veículo --</option>';
+                
+                if (!clienteId) return;
+
+                fetch(`/agendamento/veiculos-do-cliente/${clienteId}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error("Erro ao buscar veículos");
+                        return response.json();
+                    })
+                    .then(veiculos => {
+                        veiculos.forEach(veiculo => {
+                            const option = document.createElement('option');
+                            option.value = veiculo.id;
+                            option.text = `${veiculo.modelo} - ${veiculo.placa}`;
+                            veiculoSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Erro ao carregar veículos:", error);
+                    });
+            });
+        });
+    </script>
+
+    <!-- Script: Carregar preço do serviço selecionado -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const servicoSelect = document.getElementById('servico');
+            const precoInput = document.getElementById('precoServico');
+
+            servicoSelect.addEventListener('change', function () {
+                const servicoId = this.value;
+                precoInput.value = "";
+
+                if (!servicoId) return;
+
+                fetch(`/servicos/${servicoId}`) // 🔄 URL corrigida
+                    .then(response => {
+                        if (!response.ok) throw new Error("Erro ao buscar serviço");
+                        return response.json();
+                    })
+                    .then(servico => {
+                        if (servico && servico.preco !== undefined) {
+                            precoInput.value = `R$ ${servico.preco.toFixed(2).replace('.', ',')}`;
+                        } else {
+                            precoInput.value = "Preço não encontrado";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro ao carregar preço:", error);
+                        precoInput.value = "Erro ao buscar preço";
+                    });
+            });
+        });
+    </script>
+
+</body>
+</html>

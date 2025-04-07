@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Serviços</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+    <h2 class="mb-4">Lista de Serviços</h2>
+
+    <a href="/servicos/novo" class="btn btn-primary mb-3">➕ Novo Serviço</a>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço (R$)</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="servico : ${servicos}">
+                <td th:text="${servico.id}"></td>
+                <td th:text="${servico.nome}"></td>
+                <td th:text="${servico.descricao}"></td>
+                <td th:text="${servico.preco}"></td>
+                <td>
+                    <a th:href="@{/servicos/editar/{id}(id=${servico.id})}" class="btn btn-sm btn-warning">✏️ Editar</a>
+                    <a th:href="@{/servicos/excluir/{id}(id=${servico.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este serviço?')">🗑️ Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Mensagem de serviço excluído -->
+    <div th:if="${param.excluido}" class="alert alert-warning mt-3">
+        🗑️ Serviço excluído com sucesso!
+    </div>
+
+    <!-- Mensagem de serviço salvo -->
+    <div th:if="${param.sucesso}" class="alert alert-success mt-3">
+        ✅ Serviço salvo com sucesso!
+    </div>
+
+    <!-- Botão de voltar para a home -->
+    <div class="mt-4">
+        <a th:href="@{/}" class="btn btn-secondary">🏠 Voltar para Home</a>
+    </div>
+</body>
+</html>

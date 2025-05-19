@@ -15,7 +15,7 @@ public class GoogleSheetsConfig {
 
     @Bean
     public Sheets sheetsService() throws Exception {
-        InputStream inputStream = new ClassPathResource("credenciais.json").getInputStream();
+        InputStream inputStream = new ClassPathResource("/credenciais.json").getInputStream();
 
         GoogleCredential credential = GoogleCredential
                 .fromStream(inputStream)

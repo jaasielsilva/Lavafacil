@@ -1,33 +1,53 @@
-# Lavafacil
+# 🚗 Lavafácil
 
-## Descrição
-Lavafacil é uma aplicação web desenvolvida em Java com Spring Boot, que oferece um sistema para agendamento e gerenciamento de serviços de lavagem de veículos. A aplicação utiliza Thymeleaf para o frontend, MySQL como banco de dados, e implementa funcionalidades para cadastro de clientes, veículos, serviços e agendamentos.
+![Java](https://img.shields.io/badge/Java-21-blue?logo=java)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.5-brightgreen?logo=spring)
+![License](https://img.shields.io/github/license/jaasielsilva/Lavafacil)
 
-## Tecnologias Utilizadas
-- Java 21
-- Spring Boot 3.4.5
-- Thymeleaf
-- Spring Data JPA
-- MySQL
-- Lombok
-- Maven
+## 📌 Descrição
 
-## Funcionalidades
-- Cadastro e gerenciamento de clientes
-- Cadastro e gerenciamento de veículos
-- Cadastro e gerenciamento de serviços
-- Sistema de agendamento integrado entre clientes, veículos e serviços
-- Interface web responsiva usando Thymeleaf e Bootstrap
-- Configuração de banco de dados MySQL
+Lavafácil é uma aplicação web desenvolvida em Java com Spring Boot que oferece um sistema completo para agendamento e gerenciamento de serviços de lavagem de veículos.  
+Ela conta com uma interface moderna e responsiva usando Thymeleaf + Bootstrap, e integração com Google Sheets para registrar agendamentos automaticamente.
 
-## Como Executar o Projeto
+---
 
-### Pré-requisitos
-- Java 21 instalado
-- Maven instalado
-- MySQL configurado e rodando
+## 🚀 Tecnologias Utilizadas
 
-### Passos para rodar a aplicação
+- 💻 Java 21  
+- 🌱 Spring Boot 3.4.5  
+- 🐬 MySQL  
+- 🍃 Spring Data JPA  
+- 🧩 Lombok  
+- 🧪 Maven  
+- 🎨 Thymeleaf  
+- 🎯 Bootstrap  
+
+---
+
+## ✅ Funcionalidades
+
+- ✅ Cadastro e gerenciamento de clientes  
+- ✅ Cadastro e gerenciamento de veículos  
+- ✅ Cadastro e gerenciamento de serviços  
+- ✅ Sistema de agendamento integrado entre clientes, veículos e serviços  
+- ✅ Interface web responsiva (mobile-first)  
+- ✅ Integração com Google Sheets para registro dos agendamentos  
+
+---
+
+## 🛠️ Como Executar o Projeto
+
+### 🔑 Pré-requisitos
+
+- Java 21 instalado  
+- Maven instalado  
+- MySQL instalado e em execução  
+- Conta de serviço no Google Cloud (para uso do Google Sheets)
+
+### 📦 Passos para rodar a aplicação
+
 1. Clone o repositório:
-   ```bash
-   git clone https://github.com/jaasielsilva/Lavafacil.git
+
+```bash
+git clone https://github.com/jaasielsilva/Lavafacil.git
+cd Lavafacil

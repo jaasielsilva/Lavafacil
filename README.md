@@ -15,7 +15,8 @@ Ela conta com uma interface moderna e responsiva usando Thymeleaf + Bootstrap, e
 
 - 💻 Java 21  
 - 🌱 Spring Boot 3.4.5  
-- 🐬 MySQL  
+- 🐬 MySQL (produção)  
+- 🧪 H2 (teste)  
 - 🍃 Spring Data JPA  
 - 🧩 Lombok  
 - 🧪 Maven  
@@ -41,13 +42,26 @@ Ela conta com uma interface moderna e responsiva usando Thymeleaf + Bootstrap, e
 
 - Java 21 instalado  
 - Maven instalado  
-- MySQL instalado e em execução  
+- MySQL instalado e em execução (para uso em produção)  
 - Conta de serviço no Google Cloud (para uso do Google Sheets)
 
-### 📦 Passos para rodar a aplicação
+---
 
-1. Clone o repositório:
+### ⚙️ Configurações necessárias
 
-```bash
-git clone https://github.com/jaasielsilva/Lavafacil.git
-cd Lavafacil
+#### 1. Banco de Dados
+
+Você pode usar dois bancos de dados diferentes:
+
+- **Banco H2 (Memória) para testes rápidos:**  
+  O projeto já vem configurado para usar o banco H2 em memória por padrão.  
+  Basta rodar a aplicação e ela criará as tabelas automaticamente.  
+  Você pode acessar o console H2 em:  
+  `http://localhost:8080/h2-console`  
+  (Configure o JDBC URL como `jdbc:h2:mem:testdb`)
+
+- **Banco MySQL para uso em produção:**  
+  Crie um banco no MySQL:
+
+  ```sql
+  CREATE DATABASE lavafacil;
